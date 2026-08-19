@@ -124,9 +124,7 @@ public:
     std::string GetClientVersion() const {
         char buffer[32];
 
-        std::snprintf(buffer, sizeof(buffer), "%d.%d.%d",
-            _clientMajor, _clientMinor, _clientBuild
-        );
+        std::snprintf(buffer, sizeof(buffer), "%d.%d.%d", _clientMajor, _clientMinor, _clientBuild);
 
         return std::string(buffer);
     }

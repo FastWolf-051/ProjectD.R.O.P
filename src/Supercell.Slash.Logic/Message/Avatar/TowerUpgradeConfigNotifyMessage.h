@@ -11,11 +11,11 @@ public:
 
         int lengthFieldOffset = _stream->GetOffset();
 
-        // Tower upgrades count
+        // tower upgrades count
         _stream->WriteVInt(4);
 
         for (int i = 0; i < 4; ++i) {
-            // Entry can't be null
+            // entry can't be null, otherwise you will see why
             _stream->WriteBoolean(true);
 
             _stream->WriteTaggedVInt(i, 1);
@@ -23,7 +23,7 @@ public:
             _stream->WriteTaggedVInt(3 - i, 3);
             _stream->WriteTaggedVInt(0, 4);
 
-            // Entry terminator
+            // entry terminator
             _stream->WriteVInt(-1);
         }
 
@@ -36,7 +36,7 @@ public:
 
         _stream->WriteTaggedVInt(0, 2);
 
-        // Message terminator
+        // message terminator
         _stream->WriteVInt(-1);
     }
 

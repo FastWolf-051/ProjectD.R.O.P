@@ -18,7 +18,7 @@ public:
         std::ifstream file(path);
 
         if (!file.is_open()) {
-            std::cout << "You need to rename file from .env.example to .env" << std::endl;
+            std::cout << "You need to rename file from .env.example to .env to make server work" << std::endl;
             return;
         }
 
@@ -92,7 +92,7 @@ private:
         std::size_t length = std::strlen(hex);
 
         if (length % 2 != 0) {
-            throw std::invalid_argument("hex length isn't even");
+            throw std::invalid_argument("hex string length isn't even");
         }
 
         std::vector<unsigned char> result(length / 2);

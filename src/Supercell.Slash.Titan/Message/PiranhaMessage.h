@@ -13,14 +13,10 @@ public:
         _version = messageVersion;
     }
 
-    virtual ~PiranhaMessage() {
-        delete _stream;
-    }
-
     virtual void Decode() {
+        _stream->ReadVInt(); // message number (or something like that)
         _stream->ReadVInt();
-        _stream->ReadVInt();
-        _stream->ReadVInt(); // string list ptr
+        _stream->ReadVInt(); // key-value pair string array count
     }
 
     virtual void Encode() {
@@ -34,7 +30,7 @@ public:
     }
 
     virtual int GetServiceNodeType() {
-        return -1;
+        return 0;
     }
 
     short GetMessageVersion() {
@@ -46,7 +42,13 @@ public:
     }
 
     bool IsServerToClientMessage() {
-        return GetMessageType() >= 20000;
+        return GetMessageType() >= 20000 && GetMessageType() <= 30000 ||
+               GetMessageType() >= 40000;
+    }
+
+    bool IsClientToServerMessage() {
+        return GetMessageType() >= 10000 && GetMessageType() <= 20000 || 
+               GetMessageType() >= 30000;
     }
 
     unsigned char* GetMessageBytes() {
@@ -59,5 +61,9 @@ public:
 
     ByteStream* GetByteStream() {
         return _stream;
+    }
+
+    virtual ~PiranhaMessage() {
+        delete _stream;
     }
 };
