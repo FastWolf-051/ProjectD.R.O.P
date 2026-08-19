@@ -18,5 +18,8 @@ Enjoy launching it
 
 ## Screenshots in-game
 ![Login Screen](images/login_screen.png)
+Login in-game screen
 ![Lobby Screen](images/lobby_screen.png)
+Lobby in-game screen
 ![Quests Screen](images/quests_screen.png)
+Quests in-game screen
