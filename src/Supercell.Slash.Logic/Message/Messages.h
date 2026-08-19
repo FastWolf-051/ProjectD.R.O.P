@@ -1,0 +1,35 @@
+#pragma once
+
+// list of all messages is here, to avoid ton of #includes in MessageManager and LogicBoardMessageFactory
+
+#include "Login/LoginMessage.h"
+#include "Login/LoginOkMessage.h"
+#include "Pepper/ClientHelloMessage.h"
+#include "Pepper/ServerHelloMessage.h"
+#include "Home/HomePlayerDataRspMessage.h"
+#include "Home/DSClusterReqMessage.h"
+#include "Home/DSClusterRspMessage.h"
+#include "Avatar/AvatarNameCheckRequestMessage.h"
+#include "Avatar/AvatarNameCheckResponseMessage.h"
+#include "Avatar/ChatAccountBanStatusMessage.h"
+#include "Avatar/QuestGetDataReqMessage.h"
+#include "Avatar/TowerUpgradeConfigNotifyMessage.h"
+#include "Avatar/TowerForgeConfigNotifyMessage.h"
+#include "Home/KeepAliveMessage.h"
+#include "Home/KeepAliveServerMessage.h"
+#include "Home/AgeGateReqMessage.h"
+#include "Home/AgeGateRspMessage.h"
+#include "Home/HomeServerSettingRspMessage.h"
+#include "Home/HomeServerSettingReqMessage.h"
+#include "Home/BattleStateCheckReqMessage.h"
+#include "Home/BattleStateCheckRspMessage.h"
+#include "Home/HomePlayerDataReqMessage.h"
+#include "Avatar/QuestGetDataRspMessage.h"
+#include "Home/HomeReadGenericStorageReqMessage.h"
+#include "Home/HomeReadGenericStorageRspMessage.h"
+#include "Home/LeaderboardGetCurrentRankReqMessage.h"
+#include "Home/LeaderboardGetCurrentRankRspMessage.h"
+#include "Home/VoiceChatVerifyAgeResultReqMessage.h"
+#include "Home/VoiceChatVerifyAgeResultRspMessage.h"
+
+#define declare_message(name, type)
