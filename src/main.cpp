@@ -1,5 +1,5 @@
-#include "Supercell.Slash.Server/Config/Parser/ConfigParser.h"
-#include "Supercell.Slash.Server/Networking/Gateway/TCPGateway.h"
+#include "server/Config/Parser/ConfigParser.h"
+#include "server/Networking/Gateway/TCPGateway.h"
 
 int main() {
     ServerConfig::Load();
