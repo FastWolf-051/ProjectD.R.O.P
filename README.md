@@ -16,8 +16,22 @@ sudo apt install libasio-dev
 Then extract installed asio library, and update your installed library path in start.sh, and you are done<br>
 Enjoy launching it
 
-# About client
-In this repository won't be an tutorial how to make an client, i wish that you all are already know how to do it, if u really want to launch it.
+# Launching client
+Now i'm decided to make a client to run with this server.<br>
+Go to the https://mega.nz/folder/jComyLZb#jT0N2GlveP6xa0KsPnAy-w<br>
+Then you will se an apk file and .so file. The .so file is script for client.<br>
+Download those 2 files, and after installing apk file you need to run client script<br>
+From PC you need to install an specific version of frida, do it like this
+```sh
+python3 -m pip uninstall frida frida-tools
+python3 -m pip install --user frida==16.7.3 frida-tools==13.7.1
+```
+
+After installing, open cmd, type
+```sh
+frida -U gadget -l libfastwolf.so
+```
+And here you go!,you've just launched an client!
 
 ## Screenshots in-game
 ![Login Screen](images/login_screen.png)
@@ -26,6 +40,9 @@ Login in-game screen
 Lobby in-game screen
 ![Quests Screen](images/quests_screen.png)
 Quests in-game screen
+
+# Notice
+If you want to fork, update or even rewrite this project to another language, you need to mention that original source was made by me
 
 # Questions
 If you have any question about server, you can direct message me<br>
