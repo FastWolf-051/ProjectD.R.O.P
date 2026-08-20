@@ -3,7 +3,7 @@
 #include <cstdint>
 
 #include "../../titan/DataStream/ByteStream.h"
-#include "../Data/Core/GlobalID.h"
+#include "GlobalID.h"
 #include "../../titan/Logic/LogicLong.h"
 
 class ByteStreamHelper {

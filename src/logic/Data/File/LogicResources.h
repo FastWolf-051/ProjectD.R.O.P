@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "LogicDataTableResource.h"
-#include "../Tables/LogicDataTables.h"
+#include "LogicDataTables.h"
 #include "../../../titan/CSV/CSVNode.h"
 #include "../../../titan/Debug/Debugger.h"
 

@@ -3,8 +3,8 @@
 #include <array>
 
 #include "LogicDataTable.h"
-#include "../../../Titan/CSV/CSVNode.h"
-#include "../Core/GlobalID.h"
+#include "../../../titan/CSV/CSVNode.h"
+#include "../../Helper/GlobalID.h"
 
 class LogicDataTables {
 public:

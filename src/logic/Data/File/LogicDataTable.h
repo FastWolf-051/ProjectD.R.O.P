@@ -4,9 +4,9 @@
 #include <string>
 #include <iostream>
 
-#include "../Core/LogicData.h"
+#include "../LogicData.h"
 #include "../../../titan/CSV/CSVTable.h"
-#include "Titan/CSV/CSVRow.h"
+#include "titan/CSV/CSVRow.h"
 #include "../../../titan/Debug/Debugger.h"
 
 class LogicDataTable {
@@ -14,11 +14,9 @@ private:
     int _tableIdx;
     std::string _tableName;
     bool _isLoaded;
-
 protected:
     CSVTable* _table;
     std::vector<LogicData*> _items;
-
 public:
     LogicDataTable() {
         _tableIdx = 0;
