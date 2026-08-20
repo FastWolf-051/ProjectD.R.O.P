@@ -10,6 +10,7 @@ protected:
 
     CSVRow* _row;
     LogicDataTable* _table;
+
 public:
     LogicData(CSVRow* row, LogicDataTable* table) {
         _row = row;
@@ -17,6 +18,8 @@ public:
         
         _globalId = GlobalID::CreateGlobalID(static_cast<int>(table->GetTableIndex()) + 1,table->GetItemCount())
     }
+
+    virtual ~LogicData() = default;
 
     virtual void CreateReferences() {}
 
@@ -39,6 +42,4 @@ public:
     int GetDataType() const {
         return _table->GetTableIndex();
     }
-    
-    virtual ~LogicData() = default;
 };

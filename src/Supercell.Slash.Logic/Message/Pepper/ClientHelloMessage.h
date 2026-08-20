@@ -5,7 +5,7 @@
 
 class ClientHelloMessage : public PiranhaMessage {
 private:
-    int _protocol;
+    int _protocol;      // encryption used (< 3 is pepper)
     int _keyVersion;
     int _majorVersion;
     int _minorVersion;

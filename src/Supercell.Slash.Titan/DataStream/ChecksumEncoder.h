@@ -22,7 +22,7 @@ public:
 
     virtual void WriteInt24(int value) {
         if (value + 0x800000 >= 16777216) {
-            Debugger::Error("The argument (%d) in WriteInt24() too big", value);
+            Debugger::Error("The argument (%d) in writeInt24() too big", value);
         }
         _checksum = (unsigned int)((value & 0xFFFFFF) + (BitShift::__ROR4__(_checksum, 0x1F) + 0x15));
     }
@@ -99,7 +99,7 @@ public:
 
     virtual void WriteInt8(unsigned char value) {
         if (value + 0x80 >= 256) {
-            Debugger::Error("The argument (%u) in WriteInt8() is too big", value);
+            Debugger::Error("The argument (%u) in writeInt8() too big", value);
         }
         _checksum = value + BitShift::__ROR4__(_checksum, 31) + 0xB;
     }

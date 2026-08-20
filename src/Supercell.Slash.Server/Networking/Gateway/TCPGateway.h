@@ -38,7 +38,9 @@ public:
 
     void Start() {
         asio::ip::address address = asio::ip::make_address(_address);
+
         asio::ip::tcp::endpoint endpoint(address, static_cast<unsigned short>(_port));
+
         asio::error_code error;
 
         _acceptor.open(endpoint.protocol(), error);
@@ -59,6 +61,7 @@ public:
 
         while (_acceptor.is_open()) {
             asio::error_code error;
+
             asio::ip::tcp::socket socket(_ioContext);
 
             _acceptor.accept(socket, error);
@@ -70,6 +73,7 @@ public:
                 }
 
                 Debugger::Error("[ClientConnection] Receive failed: %s", error.message().c_str());
+
                 break;
             }
 
@@ -81,6 +85,7 @@ public:
         asio::error_code error;
 
         _acceptor.close(error);
+
         _ioContext.stop();
     }
 };

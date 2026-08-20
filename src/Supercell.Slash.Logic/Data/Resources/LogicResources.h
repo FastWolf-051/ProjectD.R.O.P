@@ -26,7 +26,7 @@ public:
                 break;
 
             default:
-                Debugger::Error("LogicResources::Load(): invalid resource type");
+                Debugger::Error("LogicResources.Invalid resource type");
                 break;
         }
 

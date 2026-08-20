@@ -9,7 +9,7 @@ public:
         _stream->WriteVInt(19);
         _stream->WriteVInt(0);
         
-        _stream->WriteVInt(9); // KVP array of strings inside PiranhaMessage::encode
+        _stream->WriteVInt(9); // KVP array of strings
         {
             _stream->WriteString("client.account_id");
             _stream->WriteString("16950");

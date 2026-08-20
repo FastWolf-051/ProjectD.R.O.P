@@ -18,6 +18,10 @@ public:
         PiranhaMessage::Encode();
 
         _stream->WriteHexa("00-00-00-18-02-46-14-62-d3-d4-e3-61-32-db-41-ea-8a-c1-f4-08-a8-b7-f3-bc-56-db-31-3e-00-00-00-ff-ff-ff-ff-00-00-00-04-62-65-74-61");
+
+        // _stream->WriteBytes(_serverToken);
+        // _stream->WriteInt(0);
+        // _stream->WriteStringReference("shit");
     }
 
     int GetMessageType() override {

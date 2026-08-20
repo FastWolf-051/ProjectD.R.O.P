@@ -24,14 +24,16 @@ void ClientConnection::Run() {
     while (_socket.is_open()) {
         asio::error_code error;
 
-        std::size_t read = _socket.read_some(
-            asio::buffer(_receiveBuffer + receiveBufferIndex, ReceiveBufferSize - receiveBufferIndex),
-        error);
+        std::size_t read = _socket.read_some(asio::buffer(
+            _receiveBuffer + receiveBufferIndex,
+            ReceiveBufferSize - receiveBufferIndex
+        ), error);
 
         if (error) {
             if (error == asio::error::eof) break;
 
             Debugger::Error("Receive failed: %s", error.message().c_str());
+
             break;
         }
 
@@ -51,6 +53,7 @@ void ClientConnection::Run() {
 
         if (receiveBufferIndex >= ReceiveBufferSize) {
             Debugger::Error("got receive buffer overflow");
+
             break;
         }
     }

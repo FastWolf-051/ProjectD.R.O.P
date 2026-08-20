@@ -89,6 +89,7 @@ private:
         int carry = 2;
 
         for (int i = 0; i < 24 && carry != 0; ++i) {
+
             int sum = static_cast<int>(_nonce[i]) + carry;
 
             _nonce[i] = static_cast<unsigned char>(sum & 0xFF);

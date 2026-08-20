@@ -241,7 +241,7 @@ void Messaging::Send(PiranhaMessage* message) {
     delete[] fullPayload;
 }
 
-unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int payloadLength, int& clearLength) {
+unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int payloadLength, int& clearLength) {    
     clearLength = 0;
 
     delete[] _clientPublicKey;
@@ -251,35 +251,30 @@ unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int pa
 
     std::memcpy(_clientPublicKey, payload, 32);
 
-    _sharedKey = TweetNaCl::CryptoBoxBeforenm(PepperKey::SERVER_PK, PepperKey::CLIENT_SK);
-
     Blake2BHasher hasher;
 
     hasher.Update(_clientPublicKey, 0, 32);
-    hasher.Update(PepperKey::SERVER_PK.data(), 0, PepperKey::SERVER_PK.size());
+    hasher.Update(PepperKey::SERVER_PK.data(), 0, 32);
 
     size_t hashLength = 0;
 
     unsigned char* hash = hasher.Finish(hashLength);
-    unsigned char nonce[24];
 
+    unsigned char nonce[24];
     std::memcpy(nonce, hash, 24);
 
     delete[] hash;
+
+    std::vector<unsigned char> client_pk(_clientPublicKey, _clientPublicKey + 32);
+
+    _sharedKey = TweetNaCl::CryptoBoxBeforenm(client_pk, PepperKey::SERVER_SK);
 
     const unsigned char* wireCiphertext = payload + 32;
     const int wireCiphertextLength = payloadLength - 32;
 
     bytearray encrypted(wireCiphertext, wireCiphertext + wireCiphertextLength);
-    bytearray decrypted;
 
-    try {
-        decrypted = TweetNaCl::crypto_secretbox_xsalsa19poly1305_tweet_open(encrypted, bytearray(nonce, nonce + 24), _sharedKey);
-    }
-    catch (const std::exception& e) {
-        Debugger::Error("Pepper SecretBox authentication failed: %s", e.what());
-        return nullptr;
-    }
+    bytearray decrypted = TweetNaCl::crypto_secretbox_xsalsa19poly1305_tweet_open(encrypted, bytearray(nonce, nonce + 24), _sharedKey);
 
     delete[] _receiveNonce;
     _receiveNonce = nullptr;
@@ -331,18 +326,7 @@ unsigned char* Messaging::SendPepperLoginResponse(const unsigned char* bodyPaylo
 
     delete[] hash;
 
-    bytearray encryptedBytes;
-
-    try {
-        encryptedBytes = TweetNaCl::crypto_secretbox_xsalsa19poly1305_tweet(bytearray(plaintext.begin(), plaintext.end()), bytearray(nonce, nonce + 24), _sharedKey);
-    }
-    catch (const std::exception&) {
-        return nullptr;
-    }
-
-    if (encryptedBytes.empty()) {
-        return nullptr;
-    }
+    bytearray encryptedBytes = TweetNaCl::crypto_secretbox_xsalsa19poly1305_tweet(bytearray(plaintext.begin(), plaintext.end()), bytearray(nonce, nonce + 24), _sharedKey);
 
     outputLength = static_cast<int>(encryptedBytes.size());
 

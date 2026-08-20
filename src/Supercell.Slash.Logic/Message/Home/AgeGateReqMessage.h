@@ -11,7 +11,7 @@ public:
 
         _age = _stream->ReadTaggedVInt();
 
-        _stream->ReadVInt(); // will be -1 cuz this is acts like packet terminator state
+        _stream->ReadVInt(); // will be -1 cus this is acts like packet tarminator state
     }
 
     int GetMessageType() override {

@@ -14,9 +14,11 @@ private:
     int _tableIdx;
     std::string _tableName;
     bool _isLoaded;
+
 protected:
     CSVTable* _table;
     std::vector<LogicData*> _items;
+
 public:
     LogicDataTable() {
         _tableIdx = 0;

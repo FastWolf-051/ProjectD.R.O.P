@@ -9,9 +9,12 @@
 class LogicDataTables {
 public:
     static constexpr int TABLE_COUNT = 29;
+
 private:
     inline static std::array<LogicDataTable*, TABLE_COUNT> _tables{};
+
 public:
+
     static void Init() {
         _tables.fill(nullptr);
     }
