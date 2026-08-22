@@ -3,7 +3,7 @@ cd src
 clear
 
 # this is asio installed library path
-ASIO=/home/.........
+ASIO=/home/...../asio
 
 # release version
 # clear && g++ $(find . -name "*.cpp") -I./asio/include -pthread -o rise

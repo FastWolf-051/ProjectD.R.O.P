@@ -5,7 +5,346 @@
 class HomePlayerDataRspMessage : public PiranhaMessage {
 public:
     void Encode() override {
-        _stream->WriteHexa("05-00-09-00-00-00-11-63-6c-69-65-6e-74-2e-61-63-63-6f-75-6e-74-5f-69-64-00-00-00-05-31-35-36-33-33-00-00-00-0e-63-6c-69-65-6e-74-2e-63-6f-75-6e-74-72-79-00-00-00-02-44-45-00-00-00-0d-63-6c-69-65-6e-74-2e-64-65-76-69-63-65-00-00-00-0e-41-4e-44-52-4f-49-44-5f-44-45-56-49-43-45-00-00-00-10-63-6c-69-65-6e-74-2e-64-65-76-69-63-65-5f-69-64-00-00-00-08-4a-56-43-6d-62-62-36-76-00-00-00-09-63-6c-69-65-6e-74-2e-69-70-00-00-00-0e-31-38-35-2e-31-37-30-2e-31-31-34-2e-35-38-00-00-00-0e-63-6c-69-65-6e-74-2e-76-65-72-73-69-6f-6e-00-00-00-0a-30-2e-33-2e-32-39-36-37-31-30-00-00-00-07-73-61-6d-70-6c-65-64-00-00-00-05-66-61-6c-73-65-00-00-00-07-73-70-61-6e-2d-69-64-00-00-00-10-61-38-38-37-31-64-36-65-36-35-66-39-38-35-66-62-00-00-00-08-74-72-61-63-65-2d-69-64-00-00-00-20-36-61-38-35-62-33-65-64-37-65-62-36-64-31-39-36-64-64-33-66-37-32-30-62-66-38-31-64-37-61-63-37-01-a0-00-00-05-76-01-01-81-00-02-82-88-03-03-81-00-04-84-9f-c3-85-66-05-81-00-06-81-00-07-81-00-08-81-00-09-81-01-0a-a0-00-00-00-0b-01-01-81-00-02-81-00-03-81-05-7f-0c-c0-00-00-00-01-00-0d-a0-00-00-00-20-01-01-60-00-00-00-08-49-4e-41-43-54-49-56-45-02-91-00-03-91-00-04-c0-00-00-00-01-00-05-81-00-7f-0e-a0-00-00-00-08-01-01-81-00-02-81-00-7f-0f-11-00-10-c0-00-00-00-7a-08-01-01-82-a5-01-02-81-00-03-82-88-03-04-81-00-7f-01-01-82-a7-01-02-81-00-03-81-00-04-81-00-7f-01-01-82-a8-01-02-81-00-03-81-00-04-81-00-7f-01-01-82-ab-01-02-81-00-03-81-00-04-81-00-7f-01-01-82-a9-01-02-81-00-03-81-00-04-81-00-7f-01-01-82-b0-01-02-81-00-03-81-00-04-81-00-7f-01-01-82-b1-01-02-81-00-03-81-00-04-81-00-7f-01-01-82-b3-01-02-81-00-03-81-00-04-81-00-7f-11-60-00-00-00-09-61-6c-6c-69-67-61-74-6f-72-15-a0-00-00-00-09-01-00-00-00-00-00-00-3d-11-17-82-a5-01-18-c0-00-00-00-01-00-19-a0-00-00-00-1f-01-01-60-ff-ff-ff-ff-02-c0-00-00-00-01-00-04-81-00-06-a0-00-00-00-01-00-07-81-00-08-81-00-7f-1a-a0-00-00-00-29-01-01-a0-00-00-00-01-00-02-a0-00-00-00-01-00-03-81-00-04-a0-00-00-00-09-01-00-00-00-00-6a-86-a5-f0-05-a0-00-00-00-01-00-7f-1b-c0-00-00-04-03-06-01-01-84-8c-c3-85-66-02-81-00-03-81-00-04-81-00-05-11-00-06-11-00-07-11-00-08-84-8c-c3-85-66-09-81-00-0a-c0-00-00-00-76-03-01-01-85-b1-f5-fd-e0-06-02-81-02-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-b3-f5-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-b4-f5-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-0b-c0-00-00-00-06-05-02-02-02-02-02-7f-01-01-84-8d-c3-85-66-02-81-00-03-81-00-04-81-00-05-11-00-06-11-00-07-11-00-08-84-8d-c3-85-66-09-81-00-0a-c0-00-00-00-76-03-01-01-85-95-f7-fd-e0-06-02-81-02-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-97-f7-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-98-f7-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-0b-c0-00-00-00-06-05-02-02-02-02-02-7f-01-01-84-8e-c3-85-66-02-81-01-03-81-00-04-81-00-05-11-00-06-11-00-07-11-00-08-84-8e-c3-85-66-09-81-00-0a-c0-00-00-00-76-03-01-01-85-b9-f8-fd-e0-06-02-81-02-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-bb-f8-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-bc-f8-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-0b-c0-00-00-00-06-05-02-02-02-02-02-7f-01-01-84-8f-c3-85-66-02-81-00-03-81-00-04-81-00-05-11-00-06-11-00-07-11-00-08-84-8f-c3-85-66-09-81-00-0a-c0-00-00-00-76-03-01-01-85-9e-fa-fd-e0-06-02-81-02-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-9f-fa-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-a0-fa-fd-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-0b-c0-00-00-00-06-05-02-02-02-02-02-7f-01-01-84-9b-c3-85-66-02-81-00-03-81-00-04-81-00-05-11-00-06-11-00-07-11-00-08-84-9b-c3-85-66-09-81-00-0a-c0-00-00-00-76-03-01-01-85-8d-8d-fe-e0-06-02-81-02-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-8f-8d-fe-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-90-8d-fe-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-0b-c0-00-00-00-06-05-02-02-02-02-02-7f-01-01-84-9f-c3-85-66-02-81-01-03-81-00-04-81-00-05-11-00-06-11-00-07-11-00-08-84-9f-c3-85-66-09-81-00-0a-c0-00-00-00-76-03-01-01-85-9d-93-fe-e0-06-02-81-02-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-9f-93-fe-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-01-01-85-a0-93-fe-e0-06-02-81-00-03-11-00-04-c0-00-00-00-12-01-01-01-82-a5-01-02-60-00-00-00-01-30-03-82-88-4e-7f-7f-0b-c0-00-00-00-06-05-02-02-02-02-02-7f-7f-02-81-00-7f");
+        _stream->WriteVInt(5);
+        _stream->WriteVInt(0);
+        _stream->WriteVInt(9);
+        {
+            _stream->WriteString("client.account_id");
+            _stream->WriteString("15633");
+
+            _stream->WriteString("client.country");
+            _stream->WriteString("UA");
+
+            _stream->WriteString("client.device");
+            _stream->WriteString("ANDROID_DEVICE");
+
+            _stream->WriteString("client.device_id");
+            _stream->WriteString("JVCmbb6v");
+
+            _stream->WriteString("client.ip");
+            _stream->WriteString("111.111.111.11");
+
+            _stream->WriteString("client.version");
+            _stream->WriteString("0.3.296710");
+
+            _stream->WriteString("sampled");
+            _stream->WriteString("false");
+
+            _stream->WriteString("span-id");
+            _stream->WriteString("a8804d60065998fb");
+
+            _stream->WriteString("trace-id");
+            _stream->WriteString("6a8500ed00b6d569665d3f3429865681d7ac0");
+        }
+
+        _stream->WriteVInt(1);
+        _stream->WriteByte(160);
+        _stream->WriteInt(1398);
+
+        int s0 = _stream->GetOffset();
+        _stream->WriteBoolean(true);
+        {
+            _stream->WriteTaggedVInt(1001, 1);
+            _stream->WriteTaggedVInt(200, 2);
+            _stream->WriteTaggedVInt(1002, 3);
+            _stream->WriteTaggedVInt(107000031, 4);
+            _stream->WriteTaggedVInt(1003, 5);
+            _stream->WriteTaggedVInt(1004, 6);
+            _stream->WriteTaggedVInt(1005, 7);
+            _stream->WriteTaggedVInt(1006, 8);
+            _stream->WriteTaggedVInt(1007, 9);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 10, 160, 11);
+            
+            int s1 = _stream->GetOffset();
+            _stream->WriteBoolean(true);
+            {
+                _stream->WriteTaggedVInt(0, 1);
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(5, 3);
+                _stream->WriteVInt(-1);
+            }
+            int e1 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s1 - e1, s1 - 4);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 12, 192, 11);
+
+            int s2 = _stream->GetOffset();
+            _stream->WriteVInt(0);
+
+            int e2 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s2 - e2, s2 - 4);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 13, 160, 32);
+            
+            int s3 = _stream->GetOffset();
+            _stream->WriteBoolean(true);
+            {
+                ByteStreamHelper::WriteTaggedString(*_stream, 1, "INACTIVE");
+
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(0, 3);
+
+                ByteStreamHelper::WriteBlockTag(*_stream, 4, 192, 1);
+
+                int s4 = _stream->GetOffset();
+                _stream->WriteVInt(0);
+                int e4 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s4 - e4, s4 - 4);
+                
+                _stream->WriteTaggedVInt(0, 5);
+                _stream->WriteVInt(-1);
+            }
+            int e3 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s3 - e3, s3 - 4);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 14, 160, 8);
+
+            int s5 = _stream->GetOffset();
+            _stream->WriteBoolean(true);
+            {
+                _stream->WriteTaggedVInt(0, 1);
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteVInt(-1);
+            }
+            int e5 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s5 - e5, s5 - 4);
+
+            ByteStreamHelper::WriteTaggedBoolean(*_stream, 15, false);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 16, 192, 122);
+
+            int s6 = _stream->GetOffset();
+            _stream->WriteVInt(8); // resources array
+            {   
+                // gold
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(101, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(90, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(103, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(91, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(104, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(92, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(107, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(93, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(105, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(94, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                // karma coin
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(112, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(95, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(113, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(96, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);
+
+                // hero shard
+                _stream->WriteBoolean(true);
+                _stream->WriteTaggedVInt(115, 1); // resource id
+                _stream->WriteTaggedVInt(0, 2);
+                _stream->WriteTaggedVInt(97, 3); // value
+                _stream->WriteTaggedVInt(0, 4);
+                _stream->WriteVInt(-1);   
+            }
+            int e6 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s6 - e6, s6 - 4);
+            
+            ByteStreamHelper::WriteTaggedString(*_stream, 17, "alligator");
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 21, 160, 9);
+            
+            int s7 = _stream->GetOffset();
+            _stream->WriteBoolean(true);
+            {
+                _stream->WriteInt(0);
+                _stream->WriteInt(15633);
+            }
+            int e7 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s7 - e7, s7 - 4);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 24, 192, 1);
+
+            int s8 = _stream->GetOffset();
+            _stream->WriteVInt(0);
+            int e8 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s8 - e8, s8 - 4);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 25, 160, 31);
+
+            int s9 = _stream->GetOffset();
+            _stream->WriteBoolean(true);
+            {
+                ByteStreamHelper::WriteTaggedString(*_stream, 1, "(null)");
+                ByteStreamHelper::WriteBlockTag(*_stream, 2, 192, 1);
+
+                int s10 = _stream->GetOffset();
+                _stream->WriteVInt(0);
+                int e10 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s10 - e10, s10 - 4);
+
+                _stream->WriteTaggedVInt(0, 4);
+
+                ByteStreamHelper::WriteBlockTag(*_stream, 6, 160, 1);
+
+                int s11 = _stream->GetOffset();
+                _stream->WriteBoolean(false);
+                int e11 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s11 - e11, s11 - 4);
+
+                _stream->WriteTaggedVInt(0, 7);
+                _stream->WriteTaggedVInt(0, 8);
+                _stream->WriteVInt(-1);
+            }  
+            int e9 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s9 - e9, s9 - 4);
+
+            // stub
+            ByteStreamHelper::WriteBlockTag(*_stream, 26, 160, 41);
+            
+            int s12 = _stream->GetOffset();
+            _stream->WriteBoolean(true);
+            {
+                ByteStreamHelper::WriteBlockTag(*_stream, 1, 160, 1);
+
+                int s13 = _stream->GetOffset();
+                _stream->WriteBoolean(false);
+                int e13 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s13 - e13, s13 - 4);
+
+                ByteStreamHelper::WriteBlockTag(*_stream, 2, 160, 1);
+
+                int s14 = _stream->GetOffset();
+                _stream->WriteBoolean(false);
+                int e14 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s14 - e14, s14 - 4);
+
+                _stream->WriteTaggedVInt(0, 3);
+
+                ByteStreamHelper::WriteBlockTag(*_stream, 4, 160, 9);
+
+                int s15 = _stream->GetOffset();
+                _stream->WriteBoolean(true);
+                {
+                    _stream->WriteInt(0); // leaderboard timestamp end??
+                    _stream->WriteInt(1787209200); // leaderboard timestamp start
+                }
+                int e15 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s15 - e15, s15 - 4);
+
+                ByteStreamHelper::WriteBlockTag(*_stream, 5, 160, 1);
+
+                int s16 = _stream->GetOffset();
+                _stream->WriteBoolean(false);
+                int e16 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s16 - e16, s16 - 4);
+
+                _stream->WriteVInt(-1);
+            }
+            int e12 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s12 - e12, s12 - 4);
+
+            // last stub (characters array)
+            ByteStreamHelper::WriteBlockTag(*_stream, 27, 192, 1027);
+            
+            int s17 = _stream->GetOffset();
+            _stream->WriteVInt(6); // characters array
+            {   
+                // barbarian
+                _stream->WriteBoolean(true);
+                {   
+                    _stream->WriteTaggedVInt(107000012, 1);
+                    _stream->WriteTaggedVInt(6, 2); // hero rank
+                    _stream->WriteTaggedVInt(4, 3); // hero badges
+                    _stream->WriteTaggedVInt(0, 4);
+
+                    ByteStreamHelper::WriteTaggedBoolean(*_stream, 5, false);
+                    ByteStreamHelper::WriteTaggedBoolean(*_stream, 6, false);
+                    ByteStreamHelper::WriteTaggedBoolean(*_stream, 7, false);
+
+                    _stream->WriteTaggedVInt(107000012, 8);
+                    _stream->WriteTaggedVInt(1, 9);
+
+                    ByteStreamHelper::WriteBlockTag(*_stream, 10, 192, 118);
+
+                    int s18 = _stream->GetOffset();
+                    _stream->WriteVInt(0);
+                    int e18 = _stream->GetOffset();
+                    _stream->WriteIntBigEndianAt(s18 - e18, s18 - 4);
+                }
+                
+                // skip all other characters
+                _stream->WriteBoolean(false);
+                _stream->WriteBoolean(false);
+                _stream->WriteBoolean(false);
+                _stream->WriteBoolean(false);
+                _stream->WriteBoolean(false);
+
+                ByteStreamHelper::WriteBlockTag(*_stream, 27, 192, 1027);
+                
+                int s20 = _stream->GetOffset();
+                _stream->WriteVInt(6);
+                {
+                    _stream->WriteVInt(5);
+                    _stream->WriteVInt(2);
+                    _stream->WriteVInt(2);
+                    _stream->WriteVInt(2);
+                    _stream->WriteVInt(2);
+                    _stream->WriteVInt(2);
+                }
+                int e20 = _stream->GetOffset();
+                _stream->WriteIntBigEndianAt(s20 - e20, s20 - 4);
+
+                _stream->WriteVInt(-1);
+            }
+            int e17 = _stream->GetOffset();
+            _stream->WriteIntBigEndianAt(s17 - e17, s17 - 4);
+
+            _stream->WriteVInt(-1);
+        }
+        int e0 = _stream->GetOffset();
+        _stream->WriteIntBigEndianAt(s0 - e0, s0 - 4);
+
+        _stream->WriteTaggedVInt(0, 2);
+
+        _stream->WriteVInt(-1);
     }
 
     int GetMessageType() override {

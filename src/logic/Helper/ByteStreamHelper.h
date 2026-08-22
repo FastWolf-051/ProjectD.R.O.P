@@ -56,4 +56,22 @@ public:
         stream.WriteByte(typeMarker);
         stream.WriteInt(flag);
     }
+
+    static void WriteTaggedBoolean(ByteStream& stream, int tag, bool value) {
+        stream.WriteVInt(tag);
+        stream.WriteByte(17); // wire type
+        stream.WriteBoolean(value);
+    }
+
+    static void WriteTaggedInt(ByteStream& stream, int tag, int wireType, int value) {
+        stream.WriteVInt(tag);
+        stream.WriteByte(wireType);
+        stream.WriteBoolean(value);
+    }
+
+    static void WriteTaggedString(ByteStream& stream, int tag, const char* value) {
+        stream.WriteVInt(tag);
+        stream.WriteByte(96); // wire type
+        stream.WriteString(value);
+    }
 };
