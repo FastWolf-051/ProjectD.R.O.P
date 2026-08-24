@@ -7,6 +7,7 @@
 
 #include "Pepper/ClientHelloMessage.h"
 #include "Pepper/ServerHelloMessage.h"
+#include "Pepper/ClientCryptoErrorMessage.h"
 
 #include "Avatar/AvatarNameCheckRequestMessage.h"
 #include "Avatar/AvatarNameCheckResponseMessage.h"
@@ -27,14 +28,15 @@
 #include "Home/HomePlayerDataReqMessage.h"
 #include "Home/HomeReadGenericStorageReqMessage.h"
 #include "Home/HomeReadGenericStorageRspMessage.h"
-#include "Home/LeaderboardGetCurrentRankReqMessage.h"
-#include "Home/LeaderboardGetCurrentRankRspMessage.h"
 #include "Home/VoiceChatVerifyAgeResultReqMessage.h"
 #include "Home/VoiceChatVerifyAgeResultRspMessage.h"
-#include "Home/LeaderboardInfoRspMessage.h"
-#include "Home/LeaderboardInfoReqMessage.h"
 #include "Home/SeasonShopFullInfoRspMessage.h"
 #include "Home/SeasonShopFullInfoReqMessage.h"
+
+#include "Leaderboard/LeaderboardGetCurrentRankReqMessage.h"
+#include "Leaderboard/LeaderboardGetCurrentRankRspMessage.h"
+#include "Leaderboard/LeaderboardInfoRspMessage.h"
+#include "Leaderboard/LeaderboardInfoReqMessage.h"
 
 #include "Matchmake/MatchMakeStartReqMessage.h"
 #include "Matchmake/MatchMakeStateNotifyMessage.h"

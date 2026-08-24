@@ -77,6 +77,9 @@ public:
             case 18666:
                 OnSeasonShopFullInfoReqMessage(cast_class(message, SeasonShopFullInfoReqMessage));
                 break;
+            case 10099:
+                OnClientCryptoErrorMessage(cast_class(message, ClientCryptoErrorMessage));
+                break;
         }
     }
 
@@ -193,6 +196,13 @@ private:
         Debugger::Print("[SeasonShopFullInfoReqMessage]: nope");
 
         _connection->SendMessage(new SeasonShopFullInfoRspMessage());
+    }
+
+    void OnClientCryptoErrorMessage(ClientCryptoErrorMessage* cryptoError) {
+        Debugger::Error("[ClientCryptoErrorMessage]: corrupted message type: %d", cryptoError->GetCorrputedMessageType());
+
+        // if this somehow gonna be received, u need to resolve this error
+        // and send clean message back as reply to this packet
     }
 };
 

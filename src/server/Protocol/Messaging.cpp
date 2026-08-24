@@ -10,18 +10,20 @@
 #include <vector>
 #include <cstdio>
 
-Messaging::Messaging(ClientConnection* connection)
-    : _factory(new LogicSlashMessageFactory()),
-      _encrypter(nullptr),
-      _decrypter(nullptr),
-      _pepperState(2),
-      _clientPublicKey(nullptr),
-      _sendNonce(nullptr),
-      _receiveNonce(nullptr),
-      _sharedKey(),
-      _secretKey(nullptr),
-      _connection(connection),
-      _manager(nullptr) {
+Messaging::Messaging(ClientConnection* connection) {
+    _factory = new LogicSlashMessageFactory();
+
+    _encrypter = nullptr;
+    _decrypter = nullptr;
+    _pepperState = 2;
+    _clientPublicKey = nullptr;
+    _sendNonce = nullptr;
+    _receiveNonce = nullptr;
+    _sharedKey = {};
+    _secretKey = nullptr;
+    _manager = nullptr;
+
+    _connection = connection;
 
     _sendNonce = new unsigned char[24];
     TweetNaCl::RandomBytes(_sendNonce, 24);
@@ -160,7 +162,6 @@ int Messaging::OnReceive(unsigned char* buffer, int size) {
 
 void Messaging::Send(PiranhaMessage* message) {
     // to sync client and server
-    printf("current iter: %d\n", _manager->GetLastReceivedMessageIndex());
     message->SetMessageIndex(_manager->GetLastReceivedMessageIndex());
 
     message->Encode();
@@ -237,9 +238,7 @@ void Messaging::Send(PiranhaMessage* message) {
 
     WriteHeader(fullPayload, message, sendLength);
 
-    if (sendLength > 0) {
-        std::memcpy(fullPayload + HeaderSize, toSend, sendLength);
-    }
+    std::memcpy(fullPayload + HeaderSize, toSend, sendLength);
 
     _connection->Send(fullPayload, packetLength);
 
@@ -293,9 +292,7 @@ unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int pa
 
     unsigned char* result = new unsigned char[clearLength];
 
-    if (clearLength > 0) {
-        std::memcpy(result, decrypted.data() + 48, clearLength);
-    }
+    std::memcpy(result, decrypted.data() + 48, clearLength);
 
     _pepperState = 4;
 

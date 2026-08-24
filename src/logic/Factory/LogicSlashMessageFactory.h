@@ -29,6 +29,8 @@ public:
         add_message(12727, VoiceChatVerifyAgeResultReqMessage);
         add_message(15332, LeaderboardInfoReqMessage);
         add_message(18666, SeasonShopFullInfoReqMessage);
+        add_message(19228, MatchMakeStartReqMessage);
+        add_message(10099, ClientCryptoErrorMessage);
     }
 
     PiranhaMessage* CreateMessageByType(int messageType) override {
