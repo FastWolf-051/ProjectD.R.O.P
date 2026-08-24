@@ -20,7 +20,7 @@ public:
     }
 
     virtual void Decode() {
-        _stream->ReadVInt();
+        _messageIndex = _stream->ReadVInt();
         _stream->ReadVInt();
         _stream->ReadVInt(); // string list ptr
     }
@@ -93,5 +93,9 @@ public:
 
     void SetMessageIndex(int index) {
         _messageIndex = index;
+    }
+
+    int GetMessageIndex() {
+        return _messageIndex;
     }
 };

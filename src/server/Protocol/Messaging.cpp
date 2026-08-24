@@ -159,16 +159,11 @@ int Messaging::OnReceive(unsigned char* buffer, int size) {
 }
 
 void Messaging::Send(PiranhaMessage* message) {
-    if (message->GetMessageType() == 21758) { // it moves next when this is 2
-        message->SetMessageIndex(2);
-    }
-    if (message->GetMessageType() == 20275) { // it moves next when this is 5
-        message->SetMessageIndex(5);
-    }
+    // to sync client and server
+    printf("current iter: %d\n", _manager->GetLastReceivedMessageIndex());
+    message->SetMessageIndex(_manager->GetLastReceivedMessageIndex());
 
     message->Encode();
-
-    printf("%d\n", _handledMessagesCount);
 
     ByteStream* stream = message->GetByteStream();
 

@@ -13,13 +13,19 @@
 class MessageManager {
 private:
     ClientConnection* _connection;
+
+    int _lastReceivedMessageIndex;
 public:
     MessageManager(ClientConnection* connection) {
         _connection = connection;
+
+        _lastReceivedMessageIndex = 0;
     }
 
     void ReceiveMessage(PiranhaMessage* message) {
         if (message == nullptr) return;
+
+        _lastReceivedMessageIndex = message->GetMessageIndex();
         
         switch (message->GetMessageType()) {
             // On(cast_class(message, ));
@@ -73,6 +79,11 @@ public:
                 break;
         }
     }
+
+    int GetLastReceivedMessageIndex() {
+        return _lastReceivedMessageIndex;
+    }
+    
 private:
     void OnClientHelloMessage(ClientHelloMessage* message) {
         Debugger::Print("[ClientHelloMessage]: nope");
