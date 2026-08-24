@@ -30,6 +30,8 @@ Messaging::Messaging(ClientConnection* connection)
     TweetNaCl::RandomBytes(_secretKey, 32);
 
     _manager = new MessageManager(_connection);
+
+    _handledMessagesCount = 0;
 }
 
 int Messaging::OnReceive(unsigned char* buffer, int size) {
@@ -157,7 +159,16 @@ int Messaging::OnReceive(unsigned char* buffer, int size) {
 }
 
 void Messaging::Send(PiranhaMessage* message) {
+    if (message->GetMessageType() == 21758) { // it moves next when this is 2
+        message->SetMessageIndex(2);
+    }
+    if (message->GetMessageType() == 20275) { // it moves next when this is 5
+        message->SetMessageIndex(5);
+    }
+
     message->Encode();
+
+    printf("%d\n", _handledMessagesCount);
 
     ByteStream* stream = message->GetByteStream();
 

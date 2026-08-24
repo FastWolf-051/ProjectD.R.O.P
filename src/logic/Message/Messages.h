@@ -10,10 +10,7 @@
 
 #include "Avatar/AvatarNameCheckRequestMessage.h"
 #include "Avatar/AvatarNameCheckResponseMessage.h"
-#include "Avatar/ChatAccountBanStatusMessage.h"
 #include "Avatar/QuestGetDataReqMessage.h"
-#include "Avatar/TowerUpgradeConfigNotifyMessage.h"
-#include "Avatar/TowerForgeConfigNotifyMessage.h"
 #include "Avatar/QuestGetDataRspMessage.h"
 
 #include "Home/HomePlayerDataRspMessage.h"

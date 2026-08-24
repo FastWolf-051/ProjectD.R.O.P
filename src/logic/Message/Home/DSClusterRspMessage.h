@@ -5,30 +5,8 @@
 class DSClusterRspMessage : public PiranhaMessage {
 public:
     void Encode() override {
-        // PiranhaMessage::Encode();
-
-        _stream->WriteVInt(3);
-        _stream->WriteVInt(0);
-        _stream->WriteVInt(9);
-        _stream->WriteString("client.account_id");
-        _stream->WriteString("6154");
-        _stream->WriteString("client.country");
-        _stream->WriteString("DE");
-        _stream->WriteString("client.device");
-        _stream->WriteString("ANDROID_DEVICE");
-        _stream->WriteString("client.device_id");
-        _stream->WriteString("JVCmbb6v");
-        _stream->WriteString("client.ip");
-        _stream->WriteString("185.170.114.58");
-        _stream->WriteString("client.version");
-        _stream->WriteString("0.3.296710");
-        _stream->WriteString("sampled");
-        _stream->WriteString("false");
-        _stream->WriteString("span-id");
-        _stream->WriteString("8edfc82134c59f53");
-        _stream->WriteString("trace-id");
-        _stream->WriteString("6a85694c6291f1c747620cd3c50b6c28");
-
+        PiranhaMessage::Encode();
+        
         ByteStreamHelper::WriteBlockTag(*_stream, 1, 192, 4246);
 
         _stream->WriteVInt(3);

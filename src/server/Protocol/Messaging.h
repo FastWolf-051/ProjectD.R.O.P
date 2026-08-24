@@ -30,6 +30,8 @@ private:
     ClientConnection* _connection;
     MessageManager* _manager;
 
+    int _handledMessagesCount;
+
 public:
     explicit Messaging(ClientConnection* connection);
     ~Messaging();

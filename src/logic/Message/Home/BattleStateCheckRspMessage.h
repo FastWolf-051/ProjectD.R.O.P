@@ -5,9 +5,7 @@
 class BattleStateCheckRspMessage : public PiranhaMessage {
 public:
     void Encode() override {
-        _stream->WriteVInt(2);
-        _stream->WriteVInt(0);
-        _stream->WriteVInt(0);
+        PiranhaMessage::Encode(); // must be 2
 
         ByteStreamHelper::WriteTaggedBoolean(*_stream, 1, false);
         ByteStreamHelper::WriteTaggedBoolean(*_stream, 2, false);

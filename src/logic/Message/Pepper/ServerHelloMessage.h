@@ -18,7 +18,9 @@ public:
         PiranhaMessage::Encode();
 
         _stream->WriteBytes(_serverToken);
+
         _stream->WriteInt24(0);
+        
         _stream->WriteString("");
         _stream->WriteString("beta");
     }
