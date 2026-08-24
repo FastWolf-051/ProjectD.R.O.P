@@ -27,6 +27,8 @@ public:
         add_message(16845, HomeReadGenericStorageReqMessage);
         add_message(14123, LeaderboardGetCurrentRankReqMessage);
         add_message(12727, VoiceChatVerifyAgeResultReqMessage);
+        add_message(15332, LeaderboardInfoReqMessage);
+        add_message(18666, SeasonShopFullInfoReqMessage);
     }
 
     PiranhaMessage* CreateMessageByType(int messageType) override {

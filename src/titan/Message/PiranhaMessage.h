@@ -5,8 +5,8 @@
 class PiranhaMessage {
 protected:
     ByteStream* _stream;
+    
     short _version;
-
 public:
     PiranhaMessage(short messageVersion = 0) {
         _stream = new ByteStream(10);

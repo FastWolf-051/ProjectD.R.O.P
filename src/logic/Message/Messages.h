@@ -4,17 +4,21 @@
 
 #include "Login/LoginMessage.h"
 #include "Login/LoginOkMessage.h"
+
 #include "Pepper/ClientHelloMessage.h"
 #include "Pepper/ServerHelloMessage.h"
-#include "Home/HomePlayerDataRspMessage.h"
-#include "Home/DSClusterReqMessage.h"
-#include "Home/DSClusterRspMessage.h"
+
 #include "Avatar/AvatarNameCheckRequestMessage.h"
 #include "Avatar/AvatarNameCheckResponseMessage.h"
 #include "Avatar/ChatAccountBanStatusMessage.h"
 #include "Avatar/QuestGetDataReqMessage.h"
 #include "Avatar/TowerUpgradeConfigNotifyMessage.h"
 #include "Avatar/TowerForgeConfigNotifyMessage.h"
+#include "Avatar/QuestGetDataRspMessage.h"
+
+#include "Home/HomePlayerDataRspMessage.h"
+#include "Home/DSClusterReqMessage.h"
+#include "Home/DSClusterRspMessage.h"
 #include "Home/KeepAliveMessage.h"
 #include "Home/KeepAliveServerMessage.h"
 #include "Home/AgeGateReqMessage.h"
@@ -24,12 +28,19 @@
 #include "Home/BattleStateCheckReqMessage.h"
 #include "Home/BattleStateCheckRspMessage.h"
 #include "Home/HomePlayerDataReqMessage.h"
-#include "Avatar/QuestGetDataRspMessage.h"
 #include "Home/HomeReadGenericStorageReqMessage.h"
 #include "Home/HomeReadGenericStorageRspMessage.h"
 #include "Home/LeaderboardGetCurrentRankReqMessage.h"
 #include "Home/LeaderboardGetCurrentRankRspMessage.h"
 #include "Home/VoiceChatVerifyAgeResultReqMessage.h"
 #include "Home/VoiceChatVerifyAgeResultRspMessage.h"
+#include "Home/LeaderboardInfoRspMessage.h"
+#include "Home/LeaderboardInfoReqMessage.h"
+#include "Home/SeasonShopFullInfoRspMessage.h"
+#include "Home/SeasonShopFullInfoReqMessage.h"
+
+#include "Matchmake/MatchMakeStartReqMessage.h"
+#include "Matchmake/MatchMakeStateNotifyMessage.h"
+#include "Matchmake/MatchMakeStartRspMessage.h"
 
 #define declare_message(name, type)

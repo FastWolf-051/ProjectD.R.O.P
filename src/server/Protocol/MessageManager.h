@@ -22,6 +22,7 @@ public:
         if (message == nullptr) return;
         
         switch (message->GetMessageType()) {
+            // On(cast_class(message, ));
             case 10100:
                 OnClientHelloMessage(cast_class(message, ClientHelloMessage));
                 break;
@@ -60,6 +61,15 @@ public:
                 break;
             case 12727:
                 OnVoiceChatVerifyAgeResultReqMessage(cast_class(message, VoiceChatVerifyAgeResultReqMessage));
+                break;
+            case 19228:
+                OnMatchMakeStartReqMessage(cast_class(message, MatchMakeStartReqMessage));
+                break;
+            case 15332:
+                OnLeaderboardInfoReqMessage(cast_class(message, LeaderboardInfoReqMessage));
+                break;
+            case 18666:
+                OnSeasonShopFullInfoReqMessage(cast_class(message, SeasonShopFullInfoReqMessage));
                 break;
         }
     }
@@ -108,6 +118,8 @@ private:
     }
 
     void OnKeepAliveMessage(KeepAliveMessage* message) {
+        Debugger::Print("[KeepAliveMessage]: nope");
+
         _connection->SendMessage(new KeepAliveServerMessage());
     }
 
@@ -151,6 +163,25 @@ private:
         Debugger::Print("[VoiceChatVerifyAgeResultReqMessage]: age: %s", voiceChatVerifyRequest->GetAge());
 
         _connection->SendMessage(new VoiceChatVerifyAgeResultRspMessage());
+    }
+
+    void OnMatchMakeStartReqMessage(MatchMakeStartReqMessage* startRequest) {
+        Debugger::Print("[MatchMakeStartReqMessage]: nope");
+
+        _connection->SendMessage(new MatchMakeStateNotifyMessage());
+        _connection->SendMessage(new MatchMakeStartRspMessage());
+    }
+
+    void OnLeaderboardInfoReqMessage(LeaderboardInfoReqMessage* leaderboardInfo) {
+        Debugger::Print("[LeaderboardInfoReqMessage]: nope");
+
+        _connection->SendMessage(new LeaderboardInfoRspMessage());
+    }
+
+    void OnSeasonShopFullInfoReqMessage(SeasonShopFullInfoReqMessage* shopRequest) {
+        Debugger::Print("[SeasonShopFullInfoReqMessage]: nope");
+
+        _connection->SendMessage(new SeasonShopFullInfoRspMessage());
     }
 };
 
