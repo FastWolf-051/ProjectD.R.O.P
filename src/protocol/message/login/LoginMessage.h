@@ -5,20 +5,23 @@
 
 #include "../../../shared/base/PiranhaMessage.h"
 
-#include <string>
+#include <cstdio>
+#include <cstring>
 
 class LoginMessage : public PiranhaMessage {
 private:
     LogicLong _accountId;
 
-    std::string _passToken;
+    char* _passToken = nullptr;
 
     int _clientMajor;
     int _clientMinor;
     int _clientBuild;
 
-    std::string _deviceInfo;
-    std::string _osVersion;
+    char* _traceId = nullptr;
+    char* _deviceInfo = nullptr;
+    char* _osVersion = nullptr;
+    char* _spanId = nullptr;
 
     bool _isAndroid;
 
@@ -30,13 +33,8 @@ public:
 
         _accountId = ByteStreamHelper::DecodeLogicLong(*_stream);
 
-        char* passToken = _stream->ReadString();
-
-        if (passToken != nullptr)
-        {
-            _passToken = passToken;
-            delete[] passToken;
-        }
+        delete[] _passToken;
+        _passToken = _stream->ReadString();
 
         _clientMajor = _stream->ReadVInt();
         _clientMinor = _stream->ReadVInt();
@@ -45,21 +43,28 @@ public:
         _stream->ReadVInt();
         _stream->ReadVInt();
 
-        _stream->ReadString();
+        delete[] _traceId;
+        _traceId = _stream->ReadString();
+
         _stream->ReadString();
         _stream->ReadString();
         _stream->ReadString();
 
+        delete[] _deviceInfo;
         _deviceInfo = _stream->ReadString();
 
         _stream->ReadString();
 
+        delete[] _osVersion;
         _osVersion = _stream->ReadString();
 
         _isAndroid = _stream->ReadBoolean();
 
         _stream->ReadStringReference();
-        _stream->ReadStringReference();
+
+        delete[] _spanId;
+        _spanId = _stream->ReadStringReference();
+
         _stream->ReadStringReference();
 
         _preferredLanguage = ByteStreamHelper::ReadDataReference(*_stream);
@@ -90,7 +95,7 @@ public:
         return _accountId;
     }
 
-    const std::string& GetPassToken() const {
+    char* GetPassToken() {
         return _passToken;
     }
 
@@ -106,15 +111,31 @@ public:
         return _clientBuild;
     }
 
-    const std::string& GetDeviceInfo() const {
+    char* GetClientVersion() {
+        char* version = new char[32];
+
+        std::snprintf(version, 32, "%d.%d.%d", _clientMajor, _clientMinor, _clientBuild);
+
+        return version;
+    }
+
+    char* GetTraceId() {
+        return _traceId;
+    }
+
+    char* GetSpanId() {
+        return _spanId;
+    }
+
+    char* GetDeviceInfo() {
         return _deviceInfo;
     }
 
-    const std::string& GetOsVersion() const {
+    char* GetOsVersion() {
         return _osVersion;
     }
 
-    bool GetIsAndroid() const {
+    bool IsAndroid() const {
         return _isAndroid;
     }
 
@@ -122,13 +143,12 @@ public:
         return _preferredLanguage;
     }
 
-    std::string GetClientVersion() const {
-        char buffer[32];
-
-        std::snprintf(buffer, sizeof(buffer), "%d.%d.%d",
-            _clientMajor, _clientMinor, _clientBuild
-        );
-
-        return std::string(buffer);
+    ~LoginMessage() override {
+        delete[] _passToken;
+        delete[] _traceId;
+        delete[] _deviceInfo;
+        delete[] _osVersion;
+        delete[] _spanId;
     }
+
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstring>
+#include <cstdio>
 
 class LogicStringUtil {
 public:
@@ -26,5 +27,12 @@ public:
         if (bytes == nullptr) return 0;
 
         return strlen((const char*)bytes);
+    }
+
+    static const char* ToString(int value) {
+        thread_local char buffer[32];
+
+        std::snprintf(buffer, sizeof(buffer), "%d", value);
+        return buffer;
     }
 };

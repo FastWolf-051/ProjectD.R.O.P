@@ -34,8 +34,6 @@ Messaging::Messaging(ClientSession* session) {
     TweetNaCl::RandomBytes(_secretKey, 32);
 
     _manager = new MessageManager(_connection);
-
-    _handledMessagesCount = 0;
 }
 
 int Messaging::OnReceive(unsigned char* buffer, int size) {
@@ -46,10 +44,9 @@ int Messaging::OnReceive(unsigned char* buffer, int size) {
         int length;
         short messageVersion;
 
-        ReadHeader(buffer, messageType, length, messageVersion);
+        ReadDataHeader(buffer, messageType, length, messageVersion);
 
         if (length < 0) return -1;
-
         if (size < HeaderSize + length) break;
 
         size -= HeaderSize + length;
@@ -85,7 +82,7 @@ int Messaging::OnReceive(unsigned char* buffer, int size) {
                     return -1;
                 }
 
-                clearBytes = HandlePepperLogin(encryptedBytes, length, clearLength);
+                clearBytes = DecodePepperLogin(encryptedBytes, length, clearLength);
 
                 delete[] encryptedBytes;
 
@@ -163,9 +160,7 @@ int Messaging::OnReceive(unsigned char* buffer, int size) {
 }
 
 void Messaging::Send(PiranhaMessage* message) {
-    // to sync client and server
-    message->SetMessageIndex(_manager->GetLastReceivedMessageIndex());
-
+    PrepareToEncodeData(message);
     message->Encode();
 
     ByteStream* stream = message->GetByteStream();
@@ -173,7 +168,6 @@ void Messaging::Send(PiranhaMessage* message) {
     const int bodyLength = stream->GetOffset();
 
     unsigned char* streamBuffer = stream->GetByteArray();
-
     unsigned char* body = nullptr;
 
     if (bodyLength > 0) {
@@ -187,7 +181,7 @@ void Messaging::Send(PiranhaMessage* message) {
 
     switch (_pepperState) {
         case 4: {
-            toSend = SendPepperLoginResponse(body, bodyLength, sendLength);
+            toSend = EncodePepperLoginResponse(body, bodyLength, sendLength);
 
             delete[] body;
             body = nullptr;
@@ -238,7 +232,7 @@ void Messaging::Send(PiranhaMessage* message) {
 
     unsigned char* fullPayload = new unsigned char[packetLength];
 
-    WriteHeader(fullPayload, message, sendLength);
+    WriteDataHeader(fullPayload, message, sendLength);
 
     std::memcpy(fullPayload + HeaderSize, toSend, sendLength);
 
@@ -248,7 +242,7 @@ void Messaging::Send(PiranhaMessage* message) {
     delete[] fullPayload;
 }
 
-unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int payloadLength, int& clearLength) {    
+unsigned char* Messaging::DecodePepperLogin(const unsigned char* payload, int payloadLength, int& clearLength) {    
     clearLength = 0;
 
     delete[] _clientPublicKey;
@@ -301,7 +295,7 @@ unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int pa
     return result;
 }
 
-unsigned char* Messaging::SendPepperLoginResponse(const unsigned char* bodyPayload, int bodyLength, int& outputLength) {
+unsigned char* Messaging::EncodePepperLoginResponse(const unsigned char* bodyPayload, int bodyLength, int& outputLength) {
     outputLength = 0;
 
     const int plaintextLength = 24 + 32 + bodyLength;
@@ -316,10 +310,9 @@ unsigned char* Messaging::SendPepperLoginResponse(const unsigned char* bodyPaylo
     }
 
     Blake2BHasher hasher;
-
     hasher.Update(_receiveNonce, 0, 24);
     hasher.Update(_clientPublicKey, 0, 32);
-    hasher.Update(PepperKey::SERVER_PK.data(), 0, PepperKey::SERVER_PK.size());
+    hasher.Update(PepperKey::SERVER_PK.data(), 0, 32);
 
     size_t hashLength = 0;
 
@@ -353,7 +346,28 @@ unsigned char* Messaging::SendPepperLoginResponse(const unsigned char* bodyPaylo
     return result;
 }
 
-void Messaging::ReadHeader(const unsigned char* buffer, int& messageType, int& encodingLength, short& messageVersion) {
+void Messaging::PrepareToEncodeData(PiranhaMessage* message) {
+    // to sync client and server (otherwise client
+    // will crash or will stuck in loading stage)
+    message->SetMessageIndex(_manager->GetLastReceivedMessageIndex());
+
+    // if there is zero attributes in message, client won't process
+    // your message as expected (it will show loading popup)
+    // but it don't care if message type is 20108 or 20375
+    if (message->GetMessageType() != 20108 && message->GetMessageType() != 20375 && _connection->IsLoggedIn()) {
+        message->AddAttribute("client.account_id", LogicStringUtil::ToString(_connection->GetAccountId()));
+        message->AddAttribute("client.country", _connection->GetLoginCountry());
+        message->AddAttribute("client.device", _connection->GetDevice());
+        message->AddAttribute("client.device_id", _connection->GetDeviceId());
+        message->AddAttribute("client.ip", _connection->GetIp());
+        message->AddAttribute("client.version", _connection->GetClientVersion());
+        message->AddAttribute("sampled", "false");
+        message->AddAttribute("span-id", _connection->GetSpanId());
+        message->AddAttribute("trace-id", _connection->GetTraceId());
+    }
+}
+
+void Messaging::ReadDataHeader(const unsigned char* buffer, int& messageType, int& encodingLength, short& messageVersion) {
     ByteStream stream(buffer, HeaderSize);
 
     messageType = stream.ReadShort();
@@ -361,7 +375,7 @@ void Messaging::ReadHeader(const unsigned char* buffer, int& messageType, int& e
     messageVersion = stream.ReadShort();
 }
 
-void Messaging::WriteHeader(unsigned char* buffer, PiranhaMessage* message, int length) {
+void Messaging::WriteDataHeader(unsigned char* buffer, PiranhaMessage* message, int length) {
     ByteStream stream(buffer, HeaderSize);
 
     stream.WriteShort(static_cast<short>(message->GetMessageType()));

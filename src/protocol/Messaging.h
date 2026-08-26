@@ -30,8 +30,6 @@ private:
     ClientSession* _connection;
     MessageManager* _manager;
 
-    int _handledMessagesCount;
-
 public:
     explicit Messaging(ClientSession* connection);
     ~Messaging();
@@ -40,28 +38,11 @@ public:
     void Send(PiranhaMessage* message);
 
 private:
-    unsigned char* HandlePepperLogin(
-        const unsigned char* payload,
-        int payloadLength,
-        int& clearLength
-    );
+    unsigned char* DecodePepperLogin(const unsigned char* payload, int payloadLength, int& clearLength);
+    unsigned char* EncodePepperLoginResponse(const unsigned char* bodyPayload, int bodyLength, int& outputLength);
 
-    unsigned char* SendPepperLoginResponse(
-        const unsigned char* bodyPayload,
-        int bodyLength,
-        int& outputLength
-    );
+    void PrepareToEncodeData(PiranhaMessage* message);
 
-    static void ReadHeader(
-        const unsigned char* buffer,
-        int& messageType,
-        int& encodingLength,
-        short& messageVersion
-    );
-
-    static void WriteHeader(
-        unsigned char* buffer,
-        PiranhaMessage* message,
-        int length
-    );
+    static void ReadDataHeader(const unsigned char* buffer, int& messageType, int& encodingLength, short& messageVersion);
+    static void WriteDataHeader(unsigned char* buffer, PiranhaMessage* message, int length);
 };

@@ -96,9 +96,22 @@ private:
 
     void OnLoginMessage(LoginMessage* message) {
         Debugger::Print("[LoginMessage]: accountId: %s, clientVersion: %s, passToken: %s, device: %s",
-            message->GetAccountId().ToString(), message->GetClientVersion().c_str(),
-            message->GetPassToken().c_str(), message->GetDeviceInfo().c_str()
+            message->GetAccountId().ToString(), message->GetClientVersion(),
+            message->GetPassToken(), message->GetDeviceInfo()
         );
+
+        _session->SetLoggedIn(true);
+
+        if (message->IsAndroid()) _session->SetDevice("ANDROID_DEVICE");
+        else _session->SetDevice("IOS_DEVICE");
+
+        _session->SetAccountId(message->GetAccountId().GetLowerInt());
+        _session->SetLoginCountry("US");
+        _session->SetDeviceId(message->GetDeviceInfo());
+        _session->SetClientVersion(message->GetClientVersion());
+        _session->SetSpanId(message->GetSpanId());
+        _session->SetTraceId(message->GetTraceId());
+
 
         LoginOkMessage* loginOk = new LoginOkMessage();
         loginOk->SetAvatarId(LogicLong(0, 13));
