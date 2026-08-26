@@ -1,5 +1,5 @@
-#include "server/Config/Parser/ConfigParser.h"
-#include "server/Networking/Gateway/TCPGateway.h"
+#include "config/parser/ConfigParser.h"
+#include "protocol/networking/gateway/TCPGateway.h"
 
 int main() {
     ServerConfig::Load();
