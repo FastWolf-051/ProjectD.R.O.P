@@ -8,7 +8,7 @@ class Messaging;
 
 class ClientSession {
 private:
-    static const int ReceiveBufferSize = 16384;
+    static const int receiveBufferCapacity = 16384;
 
     asio::ip::tcp::socket _socket;
     Messaging* _messaging;
@@ -23,6 +23,4 @@ public:
     void Send(unsigned char* buffer, int size);
 
     void SendMessage(PiranhaMessage* message);
-
-    asio::ip::tcp::socket& GetSocket();
 };

@@ -18,9 +18,6 @@ extern "C" {
     #include "tweetnacl_impl.c"
 }
 
-#undef FOR
-#undef sv
-
 void TweetNaCl::RandomBytes(bytearray& out) {
     if (out.empty()) return;
 

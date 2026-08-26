@@ -5,14 +5,13 @@
 
 class Blake2BConfig {
 public:
-    Blake2BConfig()
-        : OutputSize(24) {
-    }
+    Blake2BConfig() : OutputSize(24) {}
 
     std::vector<uint8_t> Key;
-    int OutputSize;
     std::vector<uint8_t> Personalization;
     std::vector<uint8_t> Salt;
+
+    int OutputSize;
 
     int GetOutputSizeInBits() const {
         return OutputSize * 8;

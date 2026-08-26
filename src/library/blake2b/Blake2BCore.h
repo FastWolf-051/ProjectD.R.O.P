@@ -59,11 +59,7 @@ private:
             ((uint64_t)data[offset + 7] << 56);
     }
 
-    static void UInt64ToBytes(
-        uint64_t value,
-        uint8_t* data,
-        int offset
-    ) {
+    static void UInt64ToBytes(uint64_t value, uint8_t* data, int offset) {
         data[offset + 0] = (uint8_t)value;
         data[offset + 1] = (uint8_t)(value >> 8);
         data[offset + 2] = (uint8_t)(value >> 16);
@@ -74,14 +70,7 @@ private:
         data[offset + 7] = (uint8_t)(value >> 56);
     }
 
-    static void G(
-        uint64_t& a,
-        uint64_t& b,
-        uint64_t& c,
-        uint64_t& d,
-        uint64_t x,
-        uint64_t y
-    ) {
+    static void G(uint64_t& a, uint64_t& b, uint64_t& c, uint64_t& d, uint64_t x, uint64_t y) {
         a = a + b + x;
         d ^= a;
         d = (d >> 32) | (d << 32);
@@ -100,10 +89,7 @@ private:
     }
 
 public:
-    static uint64_t BytesToUInt64Public(
-        const uint8_t* data,
-        int offset
-    ) {
+    static uint64_t BytesToUInt64Public(const uint8_t* data, int offset) {
         return BytesToUInt64(data, offset);
     }
 
@@ -132,11 +118,7 @@ public:
         }
     }
 
-    void HashCore(
-        const uint8_t* data,
-        size_t start,
-        size_t count
-    ) {
+    void HashCore(const uint8_t* data, size_t start, size_t count) {
         if (!_isInitialized) {
             throw std::runtime_error("Blake2BCore is not initialized");
         }

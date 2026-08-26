@@ -140,6 +140,7 @@ public:
     virtual void WriteLongLong(long long value) {
         int highInt = (int)(value >> 32);
         int lowInt = (int)value;
+        
         _checksum = (unsigned int)(lowInt + BitShift::__ROR4__((unsigned int)highInt + BitShift::__ROR4__(_checksum, 0x1F) + 0x43, 0x1f) + 0x5b);
     }
 

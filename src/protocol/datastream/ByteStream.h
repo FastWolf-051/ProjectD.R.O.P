@@ -674,243 +674,84 @@ public:
         delete[] clean;
     }
 
-    void WriteVInt64(long long value)
-    {
+    void WriteVInt64(long long value) {
         EnsureCapacity(10);
+
         _bitOffset = 0;
 
         unsigned long long v = static_cast<unsigned long long>(value);
 
-        if (value < 0)
-        {
-            // -63 .. -1
-            if (value >= -63)
-            {
-                _buffer[_offset++] =
-                    static_cast<unsigned char>(v & 0x7F);
-                return;
-            }
+        int bytes;
 
-            // -8191 .. -64
-            if (value >= -8191)
-            {
-                _buffer[_offset++] =
-                    static_cast<unsigned char>(v | 0xC0);
+        if (value >= -63 && value < 64) bytes = 1;
+        else if (value >= -8191 && value <= 8191) bytes = 2;
+        else if (value >= -1048575 && value <= 1048575) bytes = 3;
+        else if (value >= -134217727 && value <= 134217727) bytes = 4;
+        else if (value < 0) {
+            if (value > static_cast<long long>(0xC000000000000000ULL))  bytes = 9;
+            else bytes = 10;
+        }
+        else {
+            if (!(v >> 34)) bytes = 5;
+            else if (!(v >> 41)) bytes = 6;
+            else if (!(v >> 48)) bytes = 7;
+            else if (!(v >> 55)) bytes = 8;
+            else if (!(v >> 62)) bytes = 9;
+            else bytes = 10;
+        }
 
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> 6) & 0x7F);
-
-                return;
-            }
-
-            // -1048575 .. -8192
-            if (value >= -1048575)
-            {
-                _buffer[_offset++] =
-                    static_cast<unsigned char>(v | 0xC0);
-
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> 6) | 0x80);
-
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> 13) & 0x7F);
-
-                return;
-            }
-
-            // -134217727 .. -1048576
-            if (value >= -134217727)
-            {
-                _buffer[_offset++] =
-                    static_cast<unsigned char>(v | 0xC0);
-
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> 6) | 0x80);
-
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> 13) | 0x80);
-
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> 20) & 0x7F);
-
-                return;
-            }
-
-            // Generic negative case.
-            int count;
-
-            if (value > static_cast<long long>(0xC000000000000000ULL))
-                count = 7;
-            else
-                count = 8;
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>(v | 0xC0);
-
-            int shift = 6;
-
-            while (count > 1)
-            {
-                --count;
-
-                _buffer[_offset++] =
-                    static_cast<unsigned char>((v >> shift) | 0x80);
-
-                shift += 7;
-            }
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v >> shift) & 0x7F);
-
+        if (bytes == 1) {
+            _buffer[_offset++] = static_cast<unsigned char>(value < 0 ? v & 0x7F : v & 0x3F);
             return;
         }
 
-        // Positive values <= 0x3F
-        if (v <= 0x3F)
-        {
-            _buffer[_offset++] =
-                static_cast<unsigned char>(v);
-            return;
-        }
+        _buffer[_offset++] = static_cast<unsigned char>((v & 0x3F) | (value < 0 ? 0xC0 : 0x80));
 
-        // <= 13 bits
-        if (!(v >> 13))
-        {
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v & 0x3F) | 0x80);
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>(v >> 6);
-
-            return;
-        }
-
-        // <= 20 bits
-        if (!(v >> 20))
-        {
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v & 0x3F) | 0x80);
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v >> 6) | 0x80);
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>(v >> 13);
-
-            return;
-        }
-
-        // <= 27 bits
-        if (!(v >> 27))
-        {
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v & 0x3F) | 0x80);
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v >> 6) | 0x80);
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v >> 13) | 0x80);
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>(v >> 20);
-
-            return;
-        }
-
-        // Generic positive case
-        int count;
-
-        if (v >> 34)
-        {
-            if (v >> 41)
-            {
-                if (v >> 48)
-                {
-                    if (v >> 55)
-                    {
-                        count = (v >> 62) ? 8 : 7;
-                    }
-                    else
-                    {
-                        count = 6;
-                    }
-                }
-                else
-                {
-                    count = 5;
-                }
-            }
-            else
-            {
-                count = 4;
-            }
-        }
-        else
-        {
-            count = 3;
-        }
-
-        _buffer[_offset++] =
-            static_cast<unsigned char>((v & 0x3F) | 0x80);
-
-        int remaining = count + 1;
         int shift = 6;
 
-        while (remaining > 1)
-        {
-            --remaining;
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v >> shift) | 0x80);
-
-            shift += 7;
+        for (int i = 1; i < bytes; ++i, shift += 7) {
+            _buffer[_offset++] = static_cast<unsigned char>(
+                (v >> shift & 0x7F) | (i + 1 < bytes ? 0x80 : 0)
+            );
         }
-
-            _buffer[_offset++] =
-                static_cast<unsigned char>((v >> shift) & 0x7F);
-        }
+    }
 
     long long ReadVInt64() {
         _bitOffset = 0;
 
         unsigned char first = _buffer[_offset++];
 
-        unsigned long long value =
-            static_cast<unsigned long long>(first & 0x3F);
+        unsigned long long value = first & 0x3F;
 
-        // Single-byte value: 0xxxxxxx
-        // Negative single-byte value: 01xxxxxx
-        if ((first & 0x80) == 0)
-        {
-            if (first & 0x40)
-                value |= 0xFFFFFFFFFFFFFFC0ULL;
+        if (!(first & 0x80)) {
+            if (first & 0x40) value |= 0xFFFFFFFFFFFFFFC0ULL;
 
             return static_cast<long long>(value);
         }
 
         int shift = 6;
 
-        while (shift < 64)
-        {
+        while (shift < 64) {
             unsigned char b = _buffer[_offset++];
 
-            value |=
-                static_cast<unsigned long long>(b & 0x7F) << shift;
+            int bits = 64 - shift;
 
-            if ((b & 0x80) == 0)
+            if (bits >= 7) {
+                value |= static_cast<unsigned long long>(b & 0x7F) << shift;
+                shift += 7;
+            }
+            else {
+                value |= static_cast<unsigned long long>(b & ((1u << bits) - 1)) << shift;
+                shift = 64;
                 break;
+            }
 
-            shift += 7;
+            if (!(b & 0x80)) break;
         }
 
-        // Negative multi-byte value.
-        if (first & 0x40)
-        {
-            if (shift < 64)
-                value |= (~0ULL) << shift;
-            else
-                value |= 0x8000000000000000ULL;
+        if (first & 0x40) {
+            if (shift < 64)  value |= (~0ULL) << shift;
+            else value |= 0x8000000000000000ULL;
         }
 
         return static_cast<long long>(value);
@@ -949,86 +790,40 @@ public:
     }
 
     int GetVInt64Size(long long value) {
-        unsigned long long v =
-            static_cast<unsigned long long>(value);
+        unsigned long long v = static_cast<unsigned long long>(value);
 
-        if ((v & 0x8000000000000000ULL) == 0)
-        {
-            if (v < 0x40)
-                return 1;
+        if (value >= -63 && value < 64) return 1;
 
-            if (v < 0x2000)
-                return 2;
-
-            if (v < 0x100000)
-                return 3;
-
-            if (v >> 27)
-            {
-                if (v >> 34)
-                {
-                    if (v >> 41)
-                    {
-                        if (v >> 48)
-                        {
-                            if (v >> 55)
-                                return (v >> 62) ? 10 : 9;
-
-                            return 8;
-                        }
-
-                        return 7;
-                    }
-
-                    return 6;
-                }
-
-                return 5;
-            }
-
-            return 4;
+        if (value >= 0) {
+            if (v < (1ULL << 13)) return 2;
+            if (v < (1ULL << 20)) return 3;
+            if (v < (1ULL << 27)) return 4;
+            if (v < (1ULL << 34)) return 5;
+            if (v < (1ULL << 41)) return 6;
+            if (v < (1ULL << 48)) return 7;
+            if (v < (1ULL << 55)) return 8;
+            if (v < (1ULL << 62)) return 9;
+            return 10;
         }
 
-        // Negative values
-        if (v > 0xFFFFFFFFFFFFFFC0ULL)
-            return 1;
-
-        if (v > 0xFFFFFFFFFFFFE000ULL)
-            return 2;
-
-        if (v > 0xFFFFFFFFFFF00000ULL)
-            return 3;
-
-        if (v > 0xFFFFFFFFF8000000ULL)
-            return 4;
-
-        if (v > 0xFFFFFFFC00000000ULL)
-            return 5;
-
-        if (v > 0xFFFFFE0000000000ULL)
-            return 6;
-
-        if (v > 0xFFFF000000000000ULL)
-            return 7;
-
-        if (v > 0xFF80000000000000ULL)
-            return 8;
-
-        if (v > 0xC000000000000000ULL)
-            return 9;
+        if (v > 0xFFFFFFFFFFFFE000ULL) return 2;
+        if (v > 0xFFFFFFFFFFF00000ULL) return 3;
+        if (v > 0xFFFFFFFFF8000000ULL) return 4;
+        if (v > 0xFFFFFFFC00000000ULL) return 5;
+        if (v > 0xFFFFFE0000000000ULL) return 6;
+        if (v > 0xFFFF000000000000ULL) return 7;
+        if (v > 0xFF80000000000000ULL) return 8;
+        if (v > 0xC000000000000000ULL) return 9;
 
         return 10;
     }
 
     void WriteTaggedVInt64(uint32_t tag, int64_t value) {
-        // Tag
         WriteVInt(tag);
 
-        // Wire type / encoded-size marker
         int size = GetVInt64Size(value);
         WriteByte(size - 112);
 
-        // Value
         WriteVInt64(value);
     }
 };

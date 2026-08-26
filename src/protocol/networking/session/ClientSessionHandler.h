@@ -11,13 +11,8 @@ class ClientSessionHandler {
 public:
     ClientSessionHandler() {}
 
-    void OnConnect(asio::ip::tcp::socket socket) {
-        try {
-            Debugger::Print("New connection from %s", socket.remote_endpoint().address().to_string().c_str());
-        }
-        catch (...) {
-            Debugger::Print("New connection");
-        }
+    void OnNewSession(asio::ip::tcp::socket socket) {
+        Debugger::Print("New connection from %s", socket.remote_endpoint().address().to_string().c_str());
 
         std::thread([socket = std::move(socket)]() mutable {
             ClientSession session(std::move(socket));
@@ -26,7 +21,7 @@ public:
                 session.Run();
             }
             catch (const std::exception& exception) {
-                Debugger::Error("got exception occurred while processing session: %s", exception.what());
+                Debugger::Error("caught exception while processing session: %s", exception.what());
             }
         }).detach();
     }

@@ -2,17 +2,18 @@
 
 class Blake2BTreeConfig {
 public:
-    Blake2BTreeConfig()
-        : FanOut(0),
-          IntermediateHashSize(64),
-          LeafSize(0),
-          MaxHeight(0) {
-    }
-
     int FanOut;
     int IntermediateHashSize;
-    long long LeafSize;
     int MaxHeight;
+
+    long long LeafSize;
+
+    Blake2BTreeConfig() {
+        FanOut = 0;
+        IntermediateHashSize = 0;
+        LeafSize = 0;
+        MaxHeight = 0;
+    }
 
     static Blake2BTreeConfig CreateInterleaved(int parallel) {
         Blake2BTreeConfig result;

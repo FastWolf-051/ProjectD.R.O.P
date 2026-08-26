@@ -24,11 +24,7 @@ public:
     Blake2BHasher() {
         _outputSize = _config.OutputSize;
 
-        _rawConfig =
-            Blake2Builder::ConfigB(
-                _config,
-                nullptr
-            );
+        _rawConfig = Blake2Builder::ConfigB(_config, nullptr);
 
         if (!_config.Key.empty()) {
             _key = _config.Key;
@@ -37,18 +33,10 @@ public:
         Init();
     }
 
-    explicit Blake2BHasher(
-        const Blake2BConfig& config
-    )
-        : _config(config) {
-
+    explicit Blake2BHasher(const Blake2BConfig& config): _config(config) {
         _outputSize = _config.OutputSize;
 
-        _rawConfig =
-            Blake2Builder::ConfigB(
-                _config,
-                nullptr
-            );
+        _rawConfig = Blake2Builder::ConfigB(_config, nullptr);
 
         if (!_config.Key.empty()) {
             _key = _config.Key;
@@ -65,46 +53,25 @@ public:
         _core.Initialize(_rawConfig);
 
         if (!_key.empty()) {
-            _core.HashCore(
-                _key.data(),
-                0,
-                _key.size()
-            );
+            _core.HashCore(_key.data(), 0, _key.size());
         }
     }
 
-    void Update(
-        const uint8_t* data,
-        size_t start,
-        size_t count
-    ) override {
+    void Update(const uint8_t* data, size_t start, size_t count) override {
         if (data == nullptr && count != 0)
             return;
 
-        _core.HashCore(
-            data,
-            start,
-            count
-        );
+        _core.HashCore(data, start, count);
     }
 
-    uint8_t* Finish(
-        size_t& length
-    ) override {
-        std::vector<uint8_t> full =
-            _core.HashFinal();
+    uint8_t* Finish(size_t& length) override {
+        std::vector<uint8_t> full = _core.HashFinal();
 
-        length =
-            static_cast<size_t>(_outputSize);
+        length = static_cast<size_t>(_outputSize);
 
-        uint8_t* result =
-            new uint8_t[length];
+        uint8_t* result = new uint8_t[length];
 
-        std::copy(
-            full.begin(),
-            full.begin() + length,
-            result
-        );
+        std::copy(full.begin(), full.begin() + length, result);
 
         return result;
     }

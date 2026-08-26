@@ -4,29 +4,16 @@
 
 class LogicStringUtil {
 public:
-    static void ByteArrayCopy(
-        unsigned char* source,
-        int sourceOffset,
-        unsigned char* destination,
-        int destinationOffset,
-        int count
-    ) {
-        memcpy(
-            destination + destinationOffset,
-            source + sourceOffset,
-            count
-        );
+    static void ByteArrayCopy(unsigned char* source, int sourceOffset, unsigned char* destination, int destinationOffset, int count) {
+        memcpy(destination + destinationOffset, source + sourceOffset,count);
     }
 
     static unsigned char* GetBytes(const char* value) {
-        if (value == nullptr) {
-            return nullptr;
-        }
+        if (value == nullptr) return nullptr;
 
         int length = strlen(value);
 
-        unsigned char* bytes =
-            new unsigned char[length + 1];
+        unsigned char* bytes = new unsigned char[length + 1];
 
         memcpy(bytes, value, length);
 
@@ -36,9 +23,7 @@ public:
     }
 
     static int GetByteLength(unsigned char* bytes) {
-        if (bytes == nullptr) {
-            return 0;
-        }
+        if (bytes == nullptr) return 0;
 
         return strlen((const char*)bytes);
     }

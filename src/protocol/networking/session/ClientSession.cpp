@@ -8,7 +8,7 @@
 #include <utility>
 
 ClientSession::ClientSession(asio::ip::tcp::socket socket) : _socket(std::move(socket)) {
-    _receiveBuffer = new unsigned char[ReceiveBufferSize];
+    _receiveBuffer = new unsigned char[receiveBufferCapacity];
     _messaging = new Messaging(this);
 }
 
@@ -20,7 +20,7 @@ void ClientSession::Run() {
 
         std::size_t read = _socket.read_some(asio::buffer(
             _receiveBuffer + receiveBufferIndex,
-            ReceiveBufferSize - receiveBufferIndex
+            receiveBufferCapacity - receiveBufferIndex
         ), error);
 
         if (error) {
@@ -45,8 +45,8 @@ void ClientSession::Run() {
             receiveBufferIndex -= consumed;
         }
 
-        if (receiveBufferIndex >= ReceiveBufferSize) {
-            Debugger::Error("got receive buffer overflow");
+        if (receiveBufferIndex >= receiveBufferCapacity) {
+            Debugger::Error("[ClientSession]: got receive buffer overflow");
 
             break;
         }
@@ -61,10 +61,6 @@ void ClientSession::Send(unsigned char* buffer, int size) {
     if (error) {
         Debugger::Error("Failed to send data: %s", error.message().c_str());
     }
-}
-
-asio::ip::tcp::socket& ClientSession::GetSocket() {
-    return _socket;
 }
 
 void ClientSession::SendMessage(PiranhaMessage* message) {

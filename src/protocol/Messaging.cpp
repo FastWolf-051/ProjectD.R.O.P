@@ -281,7 +281,7 @@ unsigned char* Messaging::HandlePepperLogin(const unsigned char* payload, int pa
 
     bytearray encrypted(wireCiphertext, wireCiphertext + wireCiphertextLength);
 
-    bytearray decrypted = TweetNaCl::crypto_secretbox_xsalsa19poly1305_tweet_open(encrypted, bytearray(nonce, nonce + 24), _sharedKey);
+    bytearray decrypted = PepperCrypto::SecretboxOpen(encrypted, bytearray(nonce, nonce + 24), _sharedKey);
 
     delete[] _receiveNonce;
     _receiveNonce = nullptr;
@@ -331,7 +331,7 @@ unsigned char* Messaging::SendPepperLoginResponse(const unsigned char* bodyPaylo
 
     delete[] hash;
 
-    bytearray encryptedBytes = TweetNaCl::crypto_secretbox_xsalsa19poly1305_tweet(bytearray(plaintext.begin(), plaintext.end()), bytearray(nonce, nonce + 24), _sharedKey);
+    bytearray encryptedBytes = PepperCrypto::Secretbox(bytearray(plaintext.begin(), plaintext.end()), bytearray(nonce, nonce + 24), _sharedKey);
 
     outputLength = static_cast<int>(encryptedBytes.size());
 

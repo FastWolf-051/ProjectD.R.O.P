@@ -19,8 +19,6 @@ public:
         _globalId = GlobalID::CreateGlobalID(static_cast<int>(table->GetTableIndex()) + 1,table->GetItemCount())
     }
 
-    virtual ~LogicData() = default;
-
     virtual void CreateReferences() {}
 
     void SetCSVRow(CSVRow* row) {
@@ -42,4 +40,6 @@ public:
     int GetDataType() const {
         return _table->GetTableIndex();
     }
+
+    virtual ~LogicData() = default;
 };

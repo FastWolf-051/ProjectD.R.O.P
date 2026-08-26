@@ -9,7 +9,7 @@
 
 class TCPGateway {
 private:
-    static const int MAX_CURRENT_CONNECTION_COUNT = 10;
+    static const int MAX_CONNECTIONS_AT_ONCE = 10;
 
     asio::io_context _ioContext;
     asio::ip::tcp::acceptor _acceptor;
@@ -30,12 +30,6 @@ public:
         _port = ServerConfig::GetInt("SERVER_PORT");
     }
 
-    ~TCPGateway() {
-        Stop();
-
-        delete _manager;
-    }
-
     void Start() {
         asio::ip::address address = asio::ip::make_address(_address);
 
@@ -47,7 +41,7 @@ public:
 
         _acceptor.set_option(asio::ip::tcp::acceptor::reuse_address(true));
         _acceptor.bind(endpoint, error);
-        _acceptor.listen(MAX_CURRENT_CONNECTION_COUNT, error);
+        _acceptor.listen(MAX_CONNECTIONS_AT_ONCE, error);
 
         if (error) {
             throw asio::system_error(error);
@@ -77,7 +71,7 @@ public:
                 break;
             }
 
-            _manager->OnConnect(std::move(socket));
+            _manager->OnNewSession(std::move(socket));
         }
     }
 
@@ -87,5 +81,11 @@ public:
         _acceptor.close(error);
 
         _ioContext.stop();
+    }
+
+    ~TCPGateway() {
+        Stop();
+
+        delete _manager;
     }
 };

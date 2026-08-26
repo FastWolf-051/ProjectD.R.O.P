@@ -9,11 +9,7 @@ public:
 
     virtual void Init() = 0;
 
-    virtual void Update(
-        const uint8_t* data,
-        size_t start,
-        size_t count
-    ) = 0;
+    virtual void Update(const uint8_t* data, size_t start, size_t count) = 0;
 
     virtual uint8_t* Finish(size_t& length) = 0;
 
