@@ -7,8 +7,8 @@ For now, project only contains full login flow (which was kinda annoying to writ
 I needed to publish this as soon as possible, that's why code quality in this project isn't perfect at some point.
 
 # How to use
-First of all, this project is using an .env file for sensitive data, and before launching server you need to to open file which is in **Supercell.Slash.Server/Config/.env.example**<br>
-Then, you need to include actual keys for this version, otherwise server isn't gonna work, then you need to rename file **.env.example** to **.env** (that was made to avoid any .env files leak)<br>
+First of all, this project is using an .env file for sensitive data, and before launching server you need to to open file which is in **src/config/.config**<br>
+You don't need to change anything in .config file, launch as it is<br>
 Second, this project includes asio library, and on linux you can download this library like
 ```sh
 sudo apt install libasio-dev
