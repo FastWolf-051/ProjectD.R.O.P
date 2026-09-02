@@ -17,6 +17,8 @@ Then extract installed asio library, and update your installed library path in s
 Enjoy launching it
 
 # Launching client
+
+# Android
 Now i'm decided to make a client to run with this server.<br>
 Go to the https://mega.nz/folder/jComyLZb#jT0N2GlveP6xa0KsPnAy-w<br>
 Then you will se an apk file and .so file. The .so file is script for client.<br>
@@ -31,7 +33,16 @@ After installing, open cmd, type
 ```sh
 frida -U gadget -l libfastwolf.so
 ```
-And here you go!,you've just launched an client!
+And here you go!, you've just launched an android client!
+
+# iOS
+Launching an iOS client will be an bit easier, cuz it only changes destination ip.<br>
+First of all, download the clean ipa file: https://drive.google.com/file/d/1PnzTPKl7i_xLzkQjH8aazyjx1S_wVR7Y/view
+And in that link there is also ipPatcher.py which needs to be put inside Payload/Slash-IOS-Shipping.app<br>
+Run that ipPatcher.py file on a macOS terminal to patch the binary<br>
+Then compress the "Payload" folder once you're done<br>
+And at last, change the ".zip" to ".ipa" through rename.<br>
+And here you go!, you've just launched an iOs xlient!<br>
 
 ## Screenshots in-game
 ![Login Screen](images/login_screen.png)
